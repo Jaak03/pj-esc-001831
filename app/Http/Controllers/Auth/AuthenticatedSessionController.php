@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\EmailLoginRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
@@ -23,6 +24,28 @@ class AuthenticatedSessionController extends Controller
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);
+    }
+
+    /**
+     * Display the login-wit-email view.
+     */
+    public function createForEmail(): Response
+    {
+        return Inertia::render('Auth/EmailLogin', [
+            'status' => session('status'),
+        ]);
+    }
+
+    /**
+     * Handle an incoming authentication request for only email.
+     */
+    public function storeForEmail(EmailLoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+
+        $request->session()->regenerate();
+
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
