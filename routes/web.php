@@ -19,6 +19,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
+        'canLoginWithEmail' => Route::has('login.email'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
@@ -28,6 +29,19 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'product'], function () {
+    Route::get('{id}/order', function () {
+        return Inertia::render('Product/Order', [
+            // TODO Jaak - Get product from DB
+            'product' => [
+                'id' => 1,
+                'name' => 'Product 1',
+                'price' => 100,
+            ],
+        ]);
+    })->name('product.order');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
