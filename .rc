@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export SAIL_XDEBUG_MODE=develop,profile,trace,debug,coverage
+
 alias artisan="docker compose exec laravel.test php /var/www/html/artisan"
 alias composer="docker compose exec laravel.test composer"
 alias pest="docker compose exec laravel.test /var/www/html/vendor/bin/pest"
