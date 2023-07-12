@@ -5,7 +5,7 @@ namespace App\Services\TradeSafe;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\NoReturn;
 
-class TradeSafeService
+class Service
 {
     /**
      * @var string The client ID for the TradeSafe API.
