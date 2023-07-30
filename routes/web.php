@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,16 +32,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'product'], function () {
-    Route::get('{id}/order', function () {
-        return Inertia::render('Product/Order', [
-            // TODO Jaak - Get product from DB
-            'product' => [
-                'id' => 1,
-                'name' => 'Product 1',
-                'price' => 100,
-            ],
-        ]);
-    })->name('product.order');
+    Route::get('{id}/order', [ProductController::class, 'order'])->name('product.order');
 });
 
 Route::middleware('auth')->group(function () {

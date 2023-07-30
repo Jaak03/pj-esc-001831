@@ -1,6 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ImageCarousel from "@/Components/ImageCarousel";
 import OrderDetails from "@/Pages/Product/Partials/Details";
+import {Link} from "@inertiajs/react";
+import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 
 export default function Order({ auth }) {
     return (
@@ -8,8 +10,8 @@ export default function Order({ auth }) {
             user={auth.user}
         >
             <div className="flex lg:flex-row flex-col items-center">
-                <div className="basis-1/2 bg-red-50 lg:mx-6 mx-0 lg:mg-0 mb-6">
-                    <ImageCarousel className="w-full bg-blue-200" images={[
+                <div className="basis-1/2 lg:mx-6 mx-0 lg:mg-0">
+                    <ImageCarousel className="w-full" images={[
                         "/storage/images/1.jpg",
                         // "storage/images/2.jpg",
                         "/storage/images/3.jpg",
