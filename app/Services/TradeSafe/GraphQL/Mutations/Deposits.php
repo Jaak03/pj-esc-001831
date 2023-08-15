@@ -4,20 +4,32 @@ namespace App\Services\TradeSafe\GraphQL\Mutations;
 
 class Deposits
 {
-    private static string $create_hosted_checkout_link = <<<MUTATION
+    private static string $create_checkout_link = <<<MUTATION
 checkoutLink(
-    transactionId: "%s"
-    paymentMethods: [EFT, INSTANT_EFT, CARD]
+    transactionId: "%s",
+    paymentMethods: %s,
+    embed: %s
 )
 MUTATION;
 
     /**
      * Link that takes the buyer through the payment portals to deposit funds into the transaction.
-     * @param string $transaction_id
+     * @param string $transactionId
+     * @param array $paymentMethods
+     * @param bool $embed
      * @return string
      */
-    public static function createHostedCheckoutLink(string $transaction_id): string
+    public static function createCheckoutLink(
+        string $transactionId,
+        array $paymentMethods,
+        bool $embed,
+    ): string
     {
-        return sprintf(self::$create_hosted_checkout_link, $transaction_id);
+        return sprintf(
+            self::$create_checkout_link,
+            $transactionId,
+            implode(', ', $paymentMethods),
+            $embed ? 'true' : 'false'
+        );
     }
 }
