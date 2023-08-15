@@ -16,7 +16,7 @@ export default function OrderDetails({ order, auth, ...props }) {
 
     const [checkoutLink, setCheckoutLink] = useState(null);
 
-    return (
+    const productInfo = (
         <div {...props} className="flex flex-col gap-6 mx-6">
             <div>
                 <h1 className="text-3xl lg:text-left text-center">{order.name}</h1>
@@ -65,4 +65,14 @@ export default function OrderDetails({ order, auth, ...props }) {
             </form>
         </div>
     );
+
+    const embeddedCheckout = (
+        <div {...props} className="flex flex-col w-full mx-6">
+            <embed type="text/html" src={checkoutLink} className="flex w-full"/>
+        </div>
+    );
+
+    return checkoutLink
+        ? embeddedCheckout
+        : productInfo;
 }
