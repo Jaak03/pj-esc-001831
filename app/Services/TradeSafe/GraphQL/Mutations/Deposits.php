@@ -28,7 +28,7 @@ MUTATION;
         return sprintf(
             self::$create_checkout_link,
             $transactionId,
-            implode(', ', $paymentMethods),
+            '[' . implode(', ', $paymentMethods) . ']',
             $embed ? 'true' : 'false'
         );
     }
