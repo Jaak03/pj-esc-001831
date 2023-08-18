@@ -1,10 +1,15 @@
 #!/bin/sh
 
+echo "Clearing out docker instances..."
+
+docker kill $(docker ps -q)
+
+echo "Setting up aliases..."
+
 export SAIL_XDEBUG_MODE=develop,profile,trace,debug,coverage
 
 alias sail-up="sail up -d"
 alias sail="./vendor/bin/sail"
 alias artisan="sail artisan"
 alias composer="sail composer"
-alias pest="docker compose exec laravel.test /var/www/html/vendor/bin/pest"
 alias npm="sail npm"

@@ -67,9 +67,11 @@ export default function OrderDetails({ order, auth, ...props }) {
     );
 
     const embeddedCheckout = (
-        <div {...props} className="flex flex-col w-full mx-6">
-            <embed type="text/html" src={checkoutLink} className="flex w-full"/>
-        </div>
+        <embed {...props}
+               type="text/html"
+               src={checkoutLink}
+               className="flex-grow"
+        />
     );
 
     return checkoutLink
