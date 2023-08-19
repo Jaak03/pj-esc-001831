@@ -27,3 +27,12 @@ Other services that I know of include:
 # Start Vite's development server.
 sail yarn dev
 ```
+
+There is a `.rc` file in the root of the project that will allow you to run the commands without having to type 
+`sail`. To make use of this you will have to `source` the file. Have a look in the file to see what aliases and 
+exports are defined at a given time.
+
+```shell
+# Source the .rc file.
+source .rc
+```
