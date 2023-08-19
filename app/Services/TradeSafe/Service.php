@@ -210,7 +210,7 @@ class Service
     public function createCheckoutLink(
         string $transactionId = '3XhRne2PpyfBDsXy9wv8Si',
         array $paymentMethods = ['EFT', 'INSTANT_EFT', 'CARD'],
-        bool $embed = true,
+        bool $embed = false,
     ): mixed
     {
         $mutation = Deposits::createCheckoutLink(

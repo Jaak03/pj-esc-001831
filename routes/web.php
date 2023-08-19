@@ -33,6 +33,7 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'product'], function () {
     Route::get('{id}/order', [ProductController::class, 'order'])->name('product.order');
+    Route::post('checkout', [ProductController::class, 'checkout'])->name('product.checkout');
 });
 
 Route::middleware('auth')->group(function () {

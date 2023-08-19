@@ -1,8 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ImageCarousel from "@/Components/ImageCarousel";
 import OrderDetails from "@/Pages/Product/Partials/Details";
-import {Link} from "@inertiajs/react";
-import ApplicationLogo from "@/Components/ApplicationLogo.jsx";
 
 export default function Order({ auth }) {
     return (
@@ -35,8 +33,7 @@ export default function Order({ auth }) {
                                 price: "R100",
                             }
                         ],
-                        total: "R100",
-                        checkoutLink: "https://pay-sit.tradesafe.dev/checkout/embed/eyJpdiI6ImpaNDFYRkhEa0Y1VkhaNzZOUmIwZ1E9PSIsInZhbHVlIjoiYzJMbkNrdkwwZ3dreTRiYjFwYUJBL043MWt0UVdSWjlFZGdXaXJFSmFWaC8rSVVkd2xVeXJkR3Z3UlRlUUIweGxCeVdNbWxJTDdsWW5xcnhKQlhaTU82Wk8yS2FqL1VBL0drTjBjRzFOd0M3N3hEelErZEVYV3NDbXc0Q0hxWFRQQlNRR1JDVHFQMUlsNlVndFE2N0FvQzJ0TkNlR0pSZzJSUm1sNklKRFlITk0zcDhCM3Bud2pxZVhuNWVocE1WS2Y3Z2p0aWQzTkVqZ3NjdGpaN2RtRnQ5VWhZS2VIL0ovZ2NsU3RlOFZOcz0iLCJtYWMiOiI2ZDI4ZTc2MDQ2MThiYjc1MjZkYjU1OWI0Mzg0NjI1YjY4NWU1ZjkyNjk1NGI0OGM5YzdkYzY5ZjE1NTA0MDMyIiwidGFnIjoiIn0=",
+                        total: "R100"
                     }} auth={auth}/>
             </div>
         </AuthenticatedLayout>
