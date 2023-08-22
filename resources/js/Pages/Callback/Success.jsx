@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Success({ auth, status, method, transactionId, reference }) {
+    console.log(auth);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -9,13 +10,11 @@ export default function Success({ auth, status, method, transactionId, reference
         >
             <Head title="Success" />
 
-            <div>
-                <p>Received a successful purchase callback:</p>
-                <pre>{JSON.stringify(auth.user, null, 2)}</pre>
-                <p>{status}</p>
-                <p>{method}</p>
-                <p>{transactionId}</p>
-                <p>{reference}</p>
+            <div className="grid grid-cols-3 grid-rows-3 h-[94vh]">
+                <div className="col-start-2 row-start-2">
+                    <h1 className="text-center text-xl text-bold">Success</h1>
+                    <p className="text-center text-lg">Thank you for your purchase {auth.user.name}. We have sent a message to "{auth.user.email}" with relevant information about your purchase and next steps from here.</p>
+                </div>
             </div>
         </AuthenticatedLayout>
     );
