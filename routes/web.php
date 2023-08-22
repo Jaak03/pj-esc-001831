@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CallbackController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -40,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Callbacks from TradeSafe
+    Route::get('/success', [CallbackController::class, 'success'])->name('callback.success');
 });
 
 require __DIR__.'/auth.php';
