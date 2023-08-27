@@ -14,7 +14,7 @@ export default function ImageCarousel({ images, className = '', ...props }) {
         <Carousel className="flex flex-row align-middle lg:max-w-lg md:max-w-md max-w-sm mx-6" {...props} autoplay>
             {
                 images.map((image, index) => (
-                    <img src={image} alt={'image'}/>
+                    <img key={index} src={image} alt={'image'}/>
                 ))
             }
         </Carousel>

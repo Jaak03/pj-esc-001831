@@ -2,7 +2,25 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ImageCarousel from "@/Components/ImageCarousel";
 import OrderDetails from "@/Pages/Product/Partials/Details";
 
-export default function Order({ auth }) {
+export default function Order({ auth, payment = null, product = null, ...props }) {
+    if (payment !== null) {
+        console.log({
+            payment,
+            product,
+        });
+    }
+
+    const prices = [
+        {
+            title: "Shipping",
+            price: 0,
+        },
+        {
+            title: "Cost",
+            price: 100,
+        }
+    ];
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -23,17 +41,8 @@ export default function Order({ auth }) {
                             "Eleifend sem proin facilisi tellus pede donec eros porttitor ridiculus eu turpis vel erat leo lacus. Elit. Fermentum. Natoque. Tempus sagittis malesuada cubilia suscipit montes. Scelerisque sociis fames ultricies lacinia tellus amet dictumst nam mus metus.\n" +
                             "\n" +
                             "Commodo Justo porta lectus, pharetra auctor est senectus tristique lobortis condimentum id. Neque. Penatibus, arcu natoque aliquet. Etiam senectus nulla justo.",
-                        prices: [
-                            {
-                                title: "Shipping",
-                                price: "free",
-                            },
-                            {
-                                title: "Cost",
-                                price: "R100",
-                            }
-                        ],
-                        total: "R100"
+                        prices: prices.map(({ title, price }) => ({title, price: `${price ? 'R ' + price : 'free'}` })),
+                        total: 'R ' + prices.reduce((total, { price }) => total + price, 0),
                     }} auth={auth}/>
             </div>
         </AuthenticatedLayout>

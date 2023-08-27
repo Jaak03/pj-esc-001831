@@ -11,26 +11,26 @@ export default function OrderDetails({ order, auth, ...props }) {
         <div {...props} className="flex flex-col gap-6 mx-6">
             <div>
                 <h1 className="text-3xl lg:text-left text-center">{order.name}</h1>
-                {order.description.split("\n\n", ).map((paragraph) => (
-                    <>
+                {order.description.split("\n\n", ).map((paragraph, index) => (
+                    <div key={index}>
                         <br/>
                         <p className="text-gray-500 max-w-xl lg:text-left text-center">{paragraph}</p>
-                    </>
+                    </div>
                 ))}
             </div>
             <form
                 className="flex flex-col"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    post(route('product.checkout'), { data: { auth }});
+                    post(route('product.checkout'), { data: { auth, price: order.total } });
                 }}
             >
                 <Dropdown classname="flex text-red-600"/>
                 <div className="flex flex-col justify-between gap-4 mb-4">
                     {
                         order.prices
-                            .map(({ price = 'free', title = 'item'}) => (
-                                <div className="flex flex-row justify-between">
+                            .map(({ price, title}, index) => (
+                                <div key={index} className="flex flex-row justify-between">
                                     <p className="text-gray-500">{title}</p>
                                     <p className="text-gray-500">{price}</p>
                                 </div>

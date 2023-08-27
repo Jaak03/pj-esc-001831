@@ -2,7 +2,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Success({ auth, status, method, transactionId, reference }) {
-    console.log(auth);
     return (
         <AuthenticatedLayout
             user={auth.user}
