@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductOrderPageRequest;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProductController extends Controller
 {
-    public function order(): Response
+    public function order(ProductOrderPageRequest $request): Response
     {
+//        $product = Product::where('uuid', $request->uuid)?->firstOrFail();
+        $product = Product::first();
         return Inertia::render('Product/Order', [
             // TODO Jaak - Get product from DB
             'product' => [
-                'id' => 1,
-                'name' => 'Product 1',
-                'price' => 100,
+//                'id' => $product->id,
+//                'uuid' => $product->uuid,
+//                'description' => $product->description,
+//                'title' => $product->title,
+//                'price' => $product->price / 100,
             ],
         ]);
     }

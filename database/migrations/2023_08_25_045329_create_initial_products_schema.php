@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->integer('price')->default(0);
             $table->timestamps();
         });

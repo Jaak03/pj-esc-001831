@@ -6,6 +6,11 @@ export default function Order({ auth, payment = null, product = null, ...props }
     if (payment !== null) {
         console.log({
             payment,
+        });
+    }
+
+    if (product !== null) {
+        console.log({
             product,
         });
     }

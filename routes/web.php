@@ -34,7 +34,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'product'], function () {
-    Route::get('{id}/order', [ProductController::class, 'order'])->name('product.order');
+    Route::get('{uuid}/order', [ProductController::class, 'order'])->name('product.order');
     Route::post('checkout', [ProductController::class, 'checkout'])->name('product.checkout');
 });
 
