@@ -3,6 +3,7 @@
 namespace App\Services\TradeSafe;
 
 use App\Enums\PARTY_ROLES;
+use App\Models\User;
 use App\Services\TradeSafe\GraphQL\Mutations\Deposits;
 use App\Types\Allocation;
 use App\Types\BankAccount;
@@ -117,16 +118,17 @@ class Service
 
     /**
      * Create a token that will be used to represent a buyer in transactions.
+     * @param User $user
      * @return mixed
      */
-    public function createBuyerToken(): mixed
+    public function createBuyerToken(User $user): mixed
     {
         return GraphQL::mutation(TokenMutations::createBuyerToken(
             token_user: new UserToken(
-                givenName: 'John',
-                familyName: 'Buyer',
-                email: 'john.buyer@test.com',
-                mobile: '0821234567'
+                givenName: $user->given_name,
+                familyName: $user->family_name,
+                email: $user->email,
+                mobile: $user->mobile,
             ),
         ))
             ->withToken($this->access_token->getAccessToken())

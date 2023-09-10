@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -18,8 +19,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
+        'given_name',
+        'family_name',
+        'token',
+        'mobile',
         'password',
     ];
 
@@ -42,4 +46,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Returns the buyer relationship that this entity belongs to.
+     * @return HasOne
+     */
+    public function buyer(): HasOne
+    {
+        return $this->hasOne(Buyer::class);
+    }
+
+    /**
+     * Returns the seller relationship that this entity belongs to.
+     * @return HasOne
+     */
+    public function seller(): HasOne
+    {
+        return $this->hasOne(Seller::class);
+    }
 }
