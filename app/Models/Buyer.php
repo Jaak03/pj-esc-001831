@@ -6,6 +6,7 @@ use App\Traits\IsUser;
 use App\Utils\UUIDHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Buyer extends Model
 {
@@ -22,5 +23,10 @@ class Buyer extends Model
             $buyer->uuid = $buyer->uuid ?: UUIDHelper::generate();
             $buyer->save();
         });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

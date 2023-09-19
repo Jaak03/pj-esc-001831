@@ -32,15 +32,27 @@ return new class extends Migration
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table
+                ->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->string('token')->nullable();
             $table->timestamps();
+
+            $table->unique('user_id');
         });
 
         Schema::create('buyers', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table
+                ->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->string('token')->nullable();
             $table->timestamps();
+
+            $table->unique('user_id');
         });
 
         Schema::create('seller_products', function (Blueprint $table) {
@@ -63,7 +75,6 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->string('given_name')->after('email');
             $table->string('family_name')->after('given_name');
-            $table->string('token')->nullable()->after('family_name');
             $table->string('mobile')->after('family_name');
         });
     }
@@ -85,7 +96,6 @@ return new class extends Migration
             $table->dropColumn('given_name');
             $table->dropColumn('family_name');
             $table->dropColumn('mobile');
-            $table->dropColumn('token');
         });
     }
 };
