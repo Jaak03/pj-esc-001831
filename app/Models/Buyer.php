@@ -15,6 +15,7 @@ class Buyer extends Model
     protected $fillable = [
         'uuid',
         'user_id',
+        'token'
     ];
 
     protected static function boot()
@@ -28,5 +29,13 @@ class Buyer extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function createToken(): Buyer
+    {
+        $token = $this->user->createToken('TradeSafe')->plainTextToken;
+        $this->user->token = $token;
+        $this->user->save();
+        return $this;
     }
 }

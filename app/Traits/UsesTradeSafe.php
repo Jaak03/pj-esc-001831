@@ -3,7 +3,11 @@
 namespace App\Traits;
 
 use App\Facades\TradeSafe;
+use App\Models\Buyer;
+use App\Models\Seller;
 use App\Models\User;
+use Arr;
+use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait UsesTradeSafe
@@ -14,7 +18,7 @@ trait UsesTradeSafe
      */
     public function hasToken(): bool
     {
-        return (bool)$this?->user?->token;
+        return (bool)$this?->token;
     }
 
     /**
@@ -23,19 +27,33 @@ trait UsesTradeSafe
      */
     public function getToken(): string
     {
-        $token = $this?->user?->token;
+        $token = $this?->token;
 
         if ($token) return $token;
 
         return $this->createToken();
     }
 
-    public function createToken(): string
+    /**
+     * @throws Exception
+     */
+    public function addTradeSafeToken(): self
     {
-        dd(self::class);
-        $token = $this->user->createToken('TradeSafe')->plainTextToken;
-        $this->user->token = $token;
-        $this->user->save();
-        return $token;
+        if ($this->hasToken()) return $this;
+
+        $token = match (get_class($this)) {
+            Buyer::class => TradeSafe::createBuyerToken($this),
+            Seller::class => TradeSafe::createSellerToken($this),
+            default => throw new Exception('Invalid class type.'),
+        };
+
+        if (!Arr::has($token, 'tokenCreate.id')) {
+            throw new Exception('Invalid token response.');
+        }
+
+        $this->token = Arr::get($token, 'tokenCreate.id');
+        $this->save();
+
+        return $this;
     }
 }
