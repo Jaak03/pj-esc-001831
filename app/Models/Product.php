@@ -29,4 +29,9 @@ class Product extends Model
             $product->save();
         });
     }
+
+    public function seller()
+    {
+        return $this->belongsToMany(Seller::class, 'seller_products', 'product_id','seller_id');
+    }
 }

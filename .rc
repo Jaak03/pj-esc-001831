@@ -4,7 +4,6 @@ echo "Exporting environment variables for Laravel Sail..."
 export SAIL_XDEBUG_MODE=develop,profile,trace,debug,coverage
 
 echo "Defining aliases for Laravel Sail..."
-alias flush-containers="docker kill \$(docker ps -q)"
 alias sail-up="sail up -d"
 alias sail="./vendor/bin/sail"
 alias artisan="sail artisan"
