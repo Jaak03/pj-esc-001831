@@ -21,6 +21,14 @@ return new class extends Migration
             $table->string('tax_number');
             $table->timestamps();
         });
+
+        Schema::table('sellers', function (Blueprint $table) {
+            $table
+                ->foreignId('organisation_id')
+                ->nullable()
+                ->constrained('organisations')
+                ->nullOnDelete();
+        });
     }
 
     /**
@@ -28,6 +36,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('sellers', function (Blueprint $table) {
+            $table->dropForeign(['organisation_id']);
+            $table->dropColumn('organisation_id');
+        });
         Schema::dropIfExists('organisations');
     }
 };

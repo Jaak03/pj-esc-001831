@@ -4,11 +4,9 @@ namespace App\Models;
 
 use App\Traits\IsUser;
 use App\Utils\UUIDHelper;
-use App\Facades\TradeSafe;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Arr;
 
 class Buyer extends Model
 {
