@@ -4,6 +4,7 @@ namespace App\Services\TradeSafe;
 
 use App\Enums\PARTY_ROLES;
 use App\Models\Buyer;
+use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
 use App\Services\TradeSafe\GraphQL\Mutations\Deposits;
@@ -28,23 +29,23 @@ class Service
     /**
      * @var string The client ID for the TradeSafe API.
      */
-    protected string $client_id;
-    protected function getClientId(): string { return $this->client_id; }
+    private string $client_id;
+    public function getClientId(): string { return $this->client_id; }
     protected function setClientId(string $client_id): void { $this->client_id = $client_id; }
 
     /**
      * @var string The client secret for the TradeSafe API.
      */
-    protected string $client_secret;
+    private string $client_secret;
     public function getClientSecret(): string { return $this->client_secret; }
-    public function setClientSecret(string $client_secret): void { $this->client_secret = $client_secret;}
+    protected function setClientSecret(string $client_secret): void { $this->client_secret = $client_secret;}
 
     /**
      * @var string The base URL for the TradeSafe API.
      */
-    protected string $auth_endpoint;
+    private string $auth_endpoint;
     public function getAuthEndpoint(): string { return $this->auth_endpoint; }
-    public function setAuthEndpoint(string $auth_endpoint): void { $this->auth_endpoint = $auth_endpoint; }
+    protected function setAuthEndpoint(string $auth_endpoint): void { $this->auth_endpoint = $auth_endpoint; }
 
     /**
      * @var AccessToken The access token for the TradeSafe API.
@@ -120,12 +121,12 @@ class Service
 
     /**
      * Create a token that will be used to represent a buyer in transactions.
-     * @param Buyer|Seller $user
+     * @param Buyer $buyer
      * @return mixed
      */
-    public function createBuyerToken(Buyer|Seller $user): mixed
+    public function createBuyerToken(Buyer $buyer): mixed
     {
-        $user = $user->user;
+        $user = $buyer->user;
         return GraphQL::mutation(TokenMutations::createBuyerToken(
             token_user: new UserToken(
                 givenName: $user->given_name,
@@ -140,29 +141,31 @@ class Service
 
     /**
      * Create a token that will be used to represent a seller in transactions.
+     * @param Seller $seller
      * @return mixed
      */
-    public function createSellerToken(): mixed
+    public function createSellerToken(Seller $seller): mixed
     {
+        $user = $seller->user;
         return GraphQL::mutation(TokenMutations::createSellerToken(
             seller: new SellerToken(
                 user: new UserToken(
-                    givenName: 'John',
-                    familyName: 'Seller',
-                    email: 'john.seller@test.com',
-                    mobile: '0821234567'
+                    givenName: $user->given_name,
+                    familyName: $user->family_name,
+                    email: $user->email,
+                    mobile: $user->mobile,
                 ),
                 bank_account: new BankAccount(
-                    account_number: '123456789',
-                    account_type: 'SAVINGS',
-                    bank: 'SBSA',
+                    accountNumber: '123456789',
+                    accountType: 'SAVINGS',
+                    bankName: 'SBSA',
                 ),
                 organisation: new Organisation(
-                    name: 'Test Organisation',
+                    organisationName: 'Test Organisation',
                     tradeName: 'Test Organisation',
                     type: 'PRIVATE',
-                    registration_number: '123456789',
-                    tax_number: '123456789',
+                    registrationNumber: '123456789',
+                    taxNumber: '123456789',
                 ),
             ),
         ))
@@ -174,7 +177,11 @@ class Service
      * Create a transaction between a seller and a single buyer.
      * @return mixed
      */
-    public function createTransaction(): mixed
+    public function createTransaction(
+        Product $product,
+        Buyer $buyer,
+        Seller $seller,
+    ): mixed
     {
         /*
          * TODO Jaak 2023-07-30:
@@ -185,9 +192,9 @@ class Service
             title: 'Test Transaction',
             description: 'Test Transaction Description',
             allocation: new Allocation(
-                title: 'Test Allocation',
-                description: 'Test Allocation Description',
-                value: 100000,
+                title: $product->title,
+                description: $product->description,
+                value: $product->price,
                 daysToDeliver: 1,
                 daysToInspect: 1,
             ),

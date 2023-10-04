@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Traits\IsUser;
 use App\Utils\UUIDHelper;
+use App\Facades\TradeSafe;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
 
 class Buyer extends Model
 {
@@ -29,13 +31,5 @@ class Buyer extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function createToken(): Buyer
-    {
-        $token = $this->user->createToken('TradeSafe')->plainTextToken;
-        $this->user->token = $token;
-        $this->user->save();
-        return $this;
     }
 }

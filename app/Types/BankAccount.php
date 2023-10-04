@@ -5,9 +5,9 @@ namespace App\Types;
 class BankAccount
 {
     public function __construct(
-        private string $account_number,
-        private string $account_type,
-        private string $bank
+        private readonly string $accountNumber,
+        private readonly string $accountType,
+        private readonly string $bankName
     )
     {}
 
@@ -16,7 +16,7 @@ class BankAccount
      */
     public function getAccountNumber(): string
     {
-        return $this->account_number;
+        return $this->accountNumber;
     }
 
     /**
@@ -24,14 +24,14 @@ class BankAccount
      */
     public function getAccountType(): string
     {
-        return $this->account_type;
+        return $this->accountType;
     }
 
     /**
      * @return string
      */
-    public function getBank(): string
+    public function getBankName(): string
     {
-        return $this->bank;
+        return $this->bankName;
     }
 }

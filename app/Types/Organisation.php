@@ -5,11 +5,11 @@ namespace App\Types;
 class Organisation
 {
     public function __construct(
-        private string $name,
-        private string $tradeName,
-        private string $type,
-        private string $registration_number,
-        private string $tax_number
+        private readonly string $organisationName,
+        private readonly string $tradeName,
+        private readonly string $type,
+        private readonly string $registrationNumber,
+        private readonly string $taxNumber
     )
     {}
 
@@ -18,7 +18,7 @@ class Organisation
      */
     public function getName(): string
     {
-        return $this->name;
+        return $this->organisationName;
     }
 
     /**
@@ -42,7 +42,7 @@ class Organisation
      */
     public function getRegistrationNumber(): string
     {
-        return $this->registration_number;
+        return $this->registrationNumber;
     }
 
     /**
@@ -50,6 +50,6 @@ class Organisation
      */
     public function getTaxNumber(): string
     {
-        return $this->tax_number;
+        return $this->taxNumber;
     }
 }

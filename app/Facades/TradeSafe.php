@@ -4,6 +4,9 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static createBuyerToken(\App\Models\Buyer $buyer)
+ */
 class TradeSafe extends Facade
 {
     /**
